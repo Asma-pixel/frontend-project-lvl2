@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "New Cli project",
   "main": "index.js",
-
+  "type": "module",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
