@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "New Cli project",
-  "main": "index.js",
+  "main": "genDiff.js",
   "type": "module",
   "bin": {
     "gendiff": "bin/gendiff.js"
@@ -21,6 +21,12 @@
   },
   "homepage": "https://github.com/Asma-pixel/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^9.4.0"
+    "commander": "^9.4.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   }
 }
