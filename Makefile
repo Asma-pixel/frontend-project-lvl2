@@ -5,6 +5,6 @@ gendiff:
 lint: 
 	npx eslint --fix .
 test:
-	npm test
+	npx jest --colors
 
 .PHONY: test
