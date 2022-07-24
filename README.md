@@ -1,6 +1,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Asma-pixel/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Asma-pixel/frontend-project-lvl2/actions)
 
+### Test status
+ [![Actions Status](https://github.com/Asma-pixel/frontend-project-lvl2/workflows/test/badge.svg)](https://github.com/Asma-pixel/frontend-project-lvl2/actions)
+
 ## New Cli project
 
 ## Asciinema of finding differences in two json files
