@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals';
 
-test('half', () => {
+test('test', () => {
   expect(4).toBe(4);
 });

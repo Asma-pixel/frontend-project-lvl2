@@ -9,4 +9,4 @@ test:
 	npm test --colors
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
-.PHONY: test
+.PHONY: testя

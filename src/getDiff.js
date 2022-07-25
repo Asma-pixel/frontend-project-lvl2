@@ -13,28 +13,26 @@ export default (filepath1, filepath2) => {
   const file1 = JSON.parse(json1);
   const file2 = JSON.parse(json2);
 
-  const keys1 = _.keys(file1).sort();
-  const keys2 = _.keys(file2).sort();
-  const sortedFile1 = _.pick(file1, keys1);
-  const sortedFile2 = _.pick(file2, keys2);
+  const keys1 = _.keys(file1);
+  const keys2 = _.keys(file2);
 
-  const propertyArr = _.uniq([...keys1, ...keys2]);
+  const propertyArr = _.sortBy(_.uniq([...keys1, ...keys2]));
 
   const newString = propertyArr.map((item) => {
-    let resultStr = '';
-    if (Object.prototype.hasOwnProperty.call(sortedFile1, item)
-        && Object.prototype.hasOwnProperty.call(sortedFile2, item)) {
-      if (sortedFile1[`${item}`] === sortedFile2[`${item}`]) {
-        resultStr = `\t  ${item}: ${sortedFile1[`${item}`]}`;
-      } else {
-        resultStr = `\t- ${item}: ${sortedFile1[`${item}`]}\n\t+ ${item}: ${sortedFile2[`${item}`]}`;
-      }
-    } else if (Object.prototype.hasOwnProperty.call(sortedFile1, item)) {
-      resultStr = `\t- ${item}: ${sortedFile1[`${item}`]}`;
-    } else {
-      resultStr = `\t+ ${item}: ${sortedFile2[`${item}`]}`;
+    if (file1[`${item}`] === file2[`${item}`]) {
+      return `    ${item}: ${file1[`${item}`]}`;
     }
-    return resultStr;
+
+    if (Object.prototype.hasOwnProperty.call(file1, item)
+    && Object.prototype.hasOwnProperty.call(file2, item)
+    ) {
+      return `  - ${item}: ${file1[`${item}`]}\n  + ${item}: ${file2[`${item}`]}`;
+    }
+    
+    if (Object.prototype.hasOwnProperty.call(file1, item)) {
+      return `  - ${item}: ${file1[`${item}`]}`;
+    }
+    return `  + ${item}: ${file2[`${item}`]}`;
   });
 
   const newStr = `{\n${newString.join('\n')} \n}`;
