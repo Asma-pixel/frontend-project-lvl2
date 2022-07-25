@@ -13,6 +13,7 @@ export default (filepath1, filepath2) => {
   const file1 = JSON.parse(json1);
   const file2 = JSON.parse(json2);
 
+
   const keys1 = _.keys(file1);
   const keys2 = _.keys(file2);
 
@@ -28,7 +29,7 @@ export default (filepath1, filepath2) => {
     ) {
       return `  - ${item}: ${file1[`${item}`]}\n  + ${item}: ${file2[`${item}`]}`;
     }
-    
+
     if (Object.prototype.hasOwnProperty.call(file1, item)) {
       return `  - ${item}: ${file1[`${item}`]}`;
     }
