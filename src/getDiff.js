@@ -22,13 +22,14 @@ export default (filepath1, filepath2) => {
 
   const newString = propertyArr.map((item) => {
     let resultStr = '';
-    if (sortedFile1.hasOwnProperty(item) && sortedFile2.hasOwnProperty(item)) {
+    if (Object.prototype.hasOwnProperty.call(sortedFile1, item)
+        && Object.prototype.hasOwnProperty.call(sortedFile2, item)) {
       if (sortedFile1[`${item}`] === sortedFile2[`${item}`]) {
         resultStr = `\t  ${item}: ${sortedFile1[`${item}`]}`;
       } else {
         resultStr = `\t- ${item}: ${sortedFile1[`${item}`]}\n\t+ ${item}: ${sortedFile2[`${item}`]}`;
       }
-    } else if (sortedFile1.hasOwnProperty(item)) {
+    } else if (Object.prototype.hasOwnProperty.call(sortedFile1, item)) {
       resultStr = `\t- ${item}: ${sortedFile1[`${item}`]}`;
     } else {
       resultStr = `\t+ ${item}: ${sortedFile2[`${item}`]}`;
