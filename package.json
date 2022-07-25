@@ -11,7 +11,7 @@
     "pre-push": "make lint"
   },
   "scripts": {
-    "test": "npx jest --colors"
+    "test": "npm test --colors"
   },
   "repository": {
     "type": "git",
