@@ -5,7 +5,7 @@ gendiff:
 lint: 
 	npx eslint --fix .
 test:
-	npx jest --colors
+	npm test --colors
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
 .PHONY: test
