@@ -12,3 +12,6 @@
 
 ## Asciinema of finding differences in two json files
 [![asciicast](https://asciinema.org/a/oikw28ik2zhvcGewG6t8LeSj2.svg)](https://asciinema.org/a/oikw28ik2zhvcGewG6t8LeSj2)
+
+## Asciinema of finding differences in two files: yaml, json.
+[![asciicast](https://asciinema.org/a/XMLV69TEKLaxWMgzxOYFJYEYw.svg)](https://asciinema.org/a/XMLV69TEKLaxWMgzxOYFJYEYw)
