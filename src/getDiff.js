@@ -1,9 +1,8 @@
 import _ from 'lodash';
 
 import parsers from '../parsers/parsers.js';
+
 export default (filepath1, filepath2) => {
-
-
   const file1 = parsers(filepath1);
   const file2 = parsers(filepath2);
   const keys1 = _.keys(file1);

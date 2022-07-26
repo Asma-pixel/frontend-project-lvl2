@@ -1,9 +1,9 @@
 import { test, expect } from '@jest/globals';
-import getDiff from '../index.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import * as fs from 'fs';
 import * as path from 'path';
+import getDiff from '../index.js';
 import parsers from '../parsers/parsers.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,31 +22,28 @@ test('getDiff_True', () => {
   expect(testStr3).toBe(readFile('testJson.txt'));
 });
 
-
 test('getDiff_False', () => {
   const testStr1 = getDiff('./files/file1.json', './files/file1.json');
-  const testStr2 = getDiff('../frontend-project-lvl2/files/file1.json', './files/file1.json')
+  const testStr2 = getDiff('../frontend-project-lvl2/files/file1.json', './files/file1.json');
 
   expect(testStr1).not.toBe(readFile('testJson.txt'));
   expect(testStr2).not.toBe(readFile('testJson.txt'));
 });
 
-
 const expectObj = {
-  host: "hexlet.io",
+  host: 'hexlet.io',
   timeout: 50,
-  proxy: "123.234.53.22",
-  follow: false
-}
+  proxy: '123.234.53.22',
+  follow: false,
+};
 test('Parsers error', () => {
   expect(() => {
-    parsers('./files/file1.file')
+    parsers('./files/file1.file');
   }).toThrow('Program can\'t parse this format');
 });
-test('Parsers work', ()=> {
+test('Parsers work', () => {
   const received1 = parsers('./files/file1.json');
   const received2 = parsers('./files/file1.yaml');
   expect(received1).toEqual(expectObj);
   expect(received2).toEqual(expectObj);
 });
-
