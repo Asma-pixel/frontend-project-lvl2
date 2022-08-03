@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import isObj from '../helpers/isObj.js';
 
-
-const stringify = (value, replacer, count) => {
+const stringify = (value, replacer, deep) => {
   if (!isObj(value)) {
     return value;
   }
@@ -10,40 +9,34 @@ const stringify = (value, replacer, count) => {
   const arr = keys.map((item) => {
     const prop = value[item];
     if (isObj(prop)) {
-      return `${replacer.repeat(count + 4)}${item}: ${stringify(prop, replacer, count + 4)}`;
+      return `${replacer.repeat(deep)}${item}: ${stringify(prop, replacer, deep + 1)}`;
     }
-    return `${replacer.repeat(count + 4)}${item}: ${prop}`;
+    return `${replacer.repeat(deep)}${item}: ${prop}`;
   });
 
-  return `{\n${arr.join('\n')}\n${' '.repeat(count)}}`;
+  return `{\n${arr.join('\n')}\n${'    '.repeat(deep - 1)}}`;
 };
 const stylish = (tree, deep) => {
+  const progressionSpaces = '  '.repeat(deep - 1);
   const formatedData = tree.map((node) => {
-    let beginLine = ' '.repeat(deep + 4);
-    if (node.type === 'hasOnlyFirstProp') {
-      beginLine = `${' '.repeat(deep + 2)}- `;
-    }
-    if (node.type === 'hasOnlySecProp') {
-      beginLine = `${' '.repeat(deep + 2)}+ `;
-    }
     if (node.type === 'withChildrens') {
-      return `${beginLine}${node.name}: ${stylish(node.children, deep + 4)}`;
+      return `${'    '.repeat(deep)}${node.name}: ${stylish(node.children, deep + 1)}`;
     }
-  
+
     if (node.type === 'equalValue') {
-      return `${' '.repeat(deep + 4)}${node.name}: ${node.property}`;
+      return `${'    '.repeat(deep)}${node.name}: ${node.property}`;
     }
 
     if (node.type === 'hasOnlyFirstProp') {
-      return `${' '.repeat(deep + 2)}- ${node.name}: ${stringify(node.property, ' ', deep + 4)}`;
+      return `${progressionSpaces}${'  '.repeat(deep)}- ${node.name}: ${stringify(node.property, '    ', deep + 1)}`;
     }
     if (node.type === 'hasOnlySecProp') {
-      return `${' '.repeat(deep + 2)}+ ${node.name}: ${stringify(node.property, ' ', deep + 4)}`;
+      return `${progressionSpaces}${'  '.repeat(deep)}+ ${node.name}: ${stringify(node.property, '    ', deep + 1)}`;
     }
 
-    return `${' '.repeat(deep + 2)}- ${node.name}: ${stringify(node.firstProperty, ' ', deep + 4)}\n${' '.repeat(deep + 2)}+ ${node.name}: ${stringify(node.secondProperty, ' ', deep + 4)}`;
+    return `${progressionSpaces}${'  '.repeat(deep)}- ${node.name}: ${stringify(node.firstProperty, '    ', deep + 1)}\n${progressionSpaces}${'  '.repeat(deep)}+ ${node.name}: ${stringify(node.secondProperty, '    ', deep + 1)}`;
   });
 
-  return `{\n${formatedData.join('\n')}\n${' '.repeat(deep)}}`;
+  return `{\n${formatedData.join('\n')}\n${'    '.repeat(deep - 1)}}`;
 };
 export default stylish;

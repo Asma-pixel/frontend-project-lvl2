@@ -62,5 +62,5 @@ export default (filepath1, filepath2, formatter = 'stylish') => {
   };
 
   const currentFormatter = formatter === 'stylish' ? stylish : () => 'We have had no formatter yet';
-  return currentFormatter(iter(firstObj, secondObj), 0);
+  return currentFormatter(iter(firstObj, secondObj), 1);
 };
