@@ -9,7 +9,7 @@ const getCurrentFormatter = (formatter) => {
   switch (formatter) {
     case 'stylish': return stylish;
     case 'plain': return plain;
-    case 'json': return json
+    case 'json': return json;
     default: return () => 'We don\'t have this type of formatter';
   }
 };
