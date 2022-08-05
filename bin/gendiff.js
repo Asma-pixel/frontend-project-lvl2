@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import genDiff from '../src/genDiff.js';
+import getCliOutput from '../src/getCliOutput.js';
 
-genDiff();
+getCliOutput();

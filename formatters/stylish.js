@@ -1,42 +1,34 @@
 import _ from 'lodash';
-import isObj from '../helpers/isObj.js';
 
-const stringify = (value, replacer, deep) => {
-  if (!isObj(value)) {
+const stringify = (value, replacer, depth) => {
+  if (!_.isObject(value)) {
     return value;
   }
   const keys = _.keys(value);
+  const fourSpaces = replacer.repeat(depth * 4);
   const arr = keys.map((item) => {
     const prop = value[item];
-    if (isObj(prop)) {
-      return `${replacer.repeat(deep)}${item}: ${stringify(prop, replacer, deep + 1)}`;
+    if (_.isObject(prop)) {
+      return `${fourSpaces}${item}: ${stringify(prop, replacer, depth + 1)}`;
     }
-    return `${replacer.repeat(deep)}${item}: ${prop}`;
+    return `${fourSpaces}${item}: ${prop}`;
   });
 
-  return `{\n${arr.join('\n')}\n${'    '.repeat(deep - 1)}}`;
+  return `{\n${arr.join('\n')}\n${'    '.repeat(depth - 1)}}`;
 };
-const stylish = (tree, deep) => {
-  const progressionSpaces = '  '.repeat(deep - 1);
+const stylish = (tree, depth = 1) => {
+  const fourSpaces = ' '.repeat(4 * depth);
+  const twoSpaces = ' '.repeat(2 * depth);
+  const progressionSpaces = '  '.repeat(depth - 1);
   const formatedData = tree.map((node) => {
-    if (node.type === 'withChildrens') {
-      return `${'    '.repeat(deep)}${node.name}: ${stylish(node.children, deep + 1)}`;
+    switch (node.type) {
+      case 'withChildrens': return `${fourSpaces}${node.name}: ${stylish(node.children, depth + 1)}`;
+      case 'equalValue': return `${fourSpaces}${node.name}: ${node.property}`;
+      case 'hasOnlyFirstProp': return `${progressionSpaces}${twoSpaces}- ${node.name}: ${stringify(node.property, ' ', depth + 1)}`;
+      case 'hasOnlySecProp': return `${progressionSpaces}${twoSpaces}+ ${node.name}: ${stringify(node.property, ' ', depth + 1)}`;
+      default: return `${progressionSpaces}${twoSpaces}- ${node.name}: ${stringify(node.firstProperty, ' ', depth + 1)}\n${progressionSpaces}${twoSpaces}+ ${node.name}: ${stringify(node.secondProperty, '    ', depth + 1)}`;
     }
-
-    if (node.type === 'equalValue') {
-      return `${'    '.repeat(deep)}${node.name}: ${node.property}`;
-    }
-
-    if (node.type === 'hasOnlyFirstProp') {
-      return `${progressionSpaces}${'  '.repeat(deep)}- ${node.name}: ${stringify(node.property, '    ', deep + 1)}`;
-    }
-    if (node.type === 'hasOnlySecProp') {
-      return `${progressionSpaces}${'  '.repeat(deep)}+ ${node.name}: ${stringify(node.property, '    ', deep + 1)}`;
-    }
-
-    return `${progressionSpaces}${'  '.repeat(deep)}- ${node.name}: ${stringify(node.firstProperty, '    ', deep + 1)}\n${progressionSpaces}${'  '.repeat(deep)}+ ${node.name}: ${stringify(node.secondProperty, '    ', deep + 1)}`;
   });
-
-  return `{\n${formatedData.join('\n')}\n${'    '.repeat(deep - 1)}}`;
+  return `{\n${formatedData.join('\n')}\n${'    '.repeat(depth - 1)}}`;
 };
 export default stylish;
