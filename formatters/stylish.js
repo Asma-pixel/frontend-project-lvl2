@@ -26,7 +26,7 @@ const stylish = (tree, depth = 1) => {
       case 'equalValue': return `${fourSpaces}${node.name}: ${node.property}`;
       case 'hasOnlyFirstProp': return `${progressionSpaces}${twoSpaces}- ${node.name}: ${stringify(node.property, ' ', depth + 1)}`;
       case 'hasOnlySecProp': return `${progressionSpaces}${twoSpaces}+ ${node.name}: ${stringify(node.property, ' ', depth + 1)}`;
-      default: return `${progressionSpaces}${twoSpaces}- ${node.name}: ${stringify(node.firstProperty, ' ', depth + 1)}\n${progressionSpaces}${twoSpaces}+ ${node.name}: ${stringify(node.secondProperty, '    ', depth + 1)}`;
+      default: return `${progressionSpaces}${twoSpaces}- ${node.name}: ${stringify(node.firstProperty, ' ', depth + 1)}\n${progressionSpaces}${twoSpaces}+ ${node.name}: ${stringify(node.secondProperty, ' ', depth + 1)}`;
     }
   });
   return `{\n${formatedData.join('\n')}\n${'    '.repeat(depth - 1)}}`;
