@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import stylish from '../formatters/stylish.js';
 import plain from '../formatters/plain.js';
+import json from '../formatters/json.js';
 import { isObjectHasProperty, isTwoObjectsHasProperty } from '../helpers/objHasProps.js';
 import parsers from '../parsers/parsers.js';
 
@@ -8,6 +9,7 @@ const getCurrentFormatter = (formatter) => {
   switch (formatter) {
     case 'stylish': return stylish;
     case 'plain': return plain;
+    case 'json': return json
     default: return () => 'We don\'t have this type of formatter';
   }
 };
@@ -27,20 +29,16 @@ export default (filepath1, filepath2, formatter = 'stylish') => {
           name: propName,
           type: 'withChildrens',
           children: iter(firstProperty, secondProperty),
-
         };
       }
-
       if (firstProperty === secondProperty) {
         return {
-
           name: propName,
           property: firstProperty,
           type: 'equalValue',
 
         };
       }
-
       if (isTwoObjectsHasProperty(firstData, secondData, propName)) {
         return {
           name: propName,
@@ -51,20 +49,17 @@ export default (filepath1, filepath2, formatter = 'stylish') => {
       }
       if (isObjectHasProperty(firstData, propName)) {
         return {
-
           name: propName,
           property: firstProperty,
           type: 'hasOnlyFirstProp',
         };
       }
-
       return {
         name: propName,
         property: secondProperty,
         type: 'hasOnlySecProp',
       };
     });
-
     return resultArray;
   };
 

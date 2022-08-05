@@ -1,0 +1,116 @@
+[
+ {
+  "name": "common",
+  "type": "withChildrens",
+  "children": [
+   {
+    "name": "follow",
+    "property": false,
+    "type": "hasOnlySecProp"
+   },
+   {
+    "name": "setting1",
+    "property": "Value 1",
+    "type": "equalValue"
+   },
+   {
+    "name": "setting2",
+    "property": 200,
+    "type": "hasOnlyFirstProp"
+   },
+   {
+    "name": "setting3",
+    "firstProperty": true,
+    "secondProperty": null,
+    "type": "diffValue"
+   },
+   {
+    "name": "setting4",
+    "property": "blah blah",
+    "type": "hasOnlySecProp"
+   },
+   {
+    "name": "setting5",
+    "property": {
+     "key5": "value5"
+    },
+    "type": "hasOnlySecProp"
+   },
+   {
+    "name": "setting6",
+    "type": "withChildrens",
+    "children": [
+     {
+      "name": "doge",
+      "type": "withChildrens",
+      "children": [
+       {
+        "name": "wow",
+        "firstProperty": "",
+        "secondProperty": "so much",
+        "type": "diffValue"
+       }
+      ]
+     },
+     {
+      "name": "key",
+      "property": "value",
+      "type": "equalValue"
+     },
+     {
+      "name": "ops",
+      "property": "vops",
+      "type": "hasOnlySecProp"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "group1",
+  "type": "withChildrens",
+  "children": [
+   {
+    "name": "baz",
+    "firstProperty": "bas",
+    "secondProperty": "bars",
+    "type": "diffValue"
+   },
+   {
+    "name": "foo",
+    "property": "bar",
+    "type": "equalValue"
+   },
+   {
+    "name": "nest",
+    "firstProperty": {
+     "key": "value"
+    },
+    "secondProperty": "str",
+    "type": "diffValue"
+   }
+  ]
+ },
+ {
+  "name": "group2",
+  "property": {
+   "abc": 12345,
+   "deep": {
+    "id": 45
+   }
+  },
+  "type": "hasOnlyFirstProp"
+ },
+ {
+  "name": "group3",
+  "property": {
+   "deep": {
+    "id": {
+     "number": 45
+    }
+   },
+   "fee": 100500
+  },
+  "type": "hasOnlySecProp"
+ }
+]

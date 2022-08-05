@@ -46,3 +46,13 @@ test('getDiff_Plain_False', () => {
   expect(testStr1).not.toBe(readFile('expectStringPlain.txt'));
   expect(testStr2).not.toBe(readFile('expectStringPlain.txt'));
 });
+
+test('getDiff_JSON_True', () => {
+  const testStr1 = getDiff('./__fixtures__/file3.json', './__fixtures__/file4.json', 'json');
+  const testStr2 = getDiff('../frontend-project-lvl2/__fixtures__/file3.json', './__fixtures__/file4.json', 'json');
+  const testStr3 = getDiff('./__fixtures__/file3.yml', './__fixtures__/file4.json', 'json');
+
+  expect(testStr1).toBe(readFile('expectStringJson.txt'));
+  expect(testStr2).toBe(readFile('expectStringJson.txt'));
+  expect(testStr3).toBe(readFile('expectStringJson.txt'));
+});
