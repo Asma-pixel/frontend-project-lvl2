@@ -10,49 +10,41 @@ const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+const stylishFormat = readFile('expectStringStylish.txt');
+const plainFormat = readFile('expectStringPlain.txt');
+const jsonFormat = readFile('expectStringJson.txt');
+test('genDiff_Stylish', () => {
+  const testStr1 = genDiff(getFixturePath('file1.json'), getFixturePath('file2.yml'));
+  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file1.json', getFixturePath('file2.yml'));
+  const testStr3 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'));
+  const testStr4 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'), 'stylish');
 
-test('getDiff_Stylish_True', () => {
-  const testStr1 = genDiff('./__fixtures__/file3.json', './__fixtures__/file4.json');
-  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file3.json', './__fixtures__/file4.json');
-  const testStr3 = genDiff('./__fixtures__/file3.yml', './__fixtures__/file4.json');
-
-  expect(testStr1).toBe(readFile('expectStringStylish.txt'));
-  expect(testStr2).toBe(readFile('expectStringStylish.txt'));
-  expect(testStr3).toBe(readFile('expectStringStylish.txt'));
+  expect(testStr1).toBe(stylishFormat);
+  expect(testStr2).toBe(stylishFormat);
+  expect(testStr3).toBe(stylishFormat);
+  expect(testStr4).toBe(stylishFormat);
 });
 
-test('getDiff_Stylish_False', () => {
-  const testStr1 = genDiff('./__fixtures__/file3.json', './__fixtures__/file2.json');
-  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file4.json', './__fixtures__/file1.json');
+test('genDiff_Plain', () => {
+  const testStr1 = genDiff(getFixturePath('file1.json'), getFixturePath('file2.yml'), 'plain');
+  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file1.json', getFixturePath('file2.yml'), 'plain');
+  const testStr3 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'), 'plain');
+  const testStr4 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'));
 
-  expect(testStr1).not.toBe(readFile('expectStringStylish.txt'));
-  expect(testStr2).not.toBe(readFile('expectStringStylish.txt'));
+  expect(testStr1).toBe(plainFormat);
+  expect(testStr2).toBe(plainFormat);
+  expect(testStr3).toBe(plainFormat);
+  expect(testStr4).not.toBe(plainFormat);
 });
 
-test('getDiff_Plain_True', () => {
-  const testStr1 = genDiff('./__fixtures__/file3.json', './__fixtures__/file4.json', 'plain');
-  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file3.json', './__fixtures__/file4.json', 'plain');
-  const testStr3 = genDiff('./__fixtures__/file3.yml', './__fixtures__/file4.json', 'plain');
+test('genDiff_JSON', () => {
+  const testStr1 = genDiff(getFixturePath('file1.json'), getFixturePath('file2.yml'), 'json');
+  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file1.json', getFixturePath('file2.yml'), 'json');
+  const testStr3 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'), 'json');
+  const testStr4 = genDiff(getFixturePath('file1.yml'), getFixturePath('file2.json'));
 
-  expect(testStr1).toBe(readFile('expectStringPlain.txt'));
-  expect(testStr2).toBe(readFile('expectStringPlain.txt'));
-  expect(testStr3).toBe(readFile('expectStringPlain.txt'));
-});
-
-test('getDiff_Plain_False', () => {
-  const testStr1 = genDiff('./__fixtures__/file3.json', './__fixtures__/file2.json', 'plain');
-  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file4.json', './__fixtures__/file1.json', 'stylish');
-
-  expect(testStr1).not.toBe(readFile('expectStringPlain.txt'));
-  expect(testStr2).not.toBe(readFile('expectStringPlain.txt'));
-});
-
-test('getDiff_JSON_True', () => {
-  const testStr1 = genDiff('./__fixtures__/file3.json', './__fixtures__/file4.json', 'json');
-  const testStr2 = genDiff('../frontend-project-lvl2/__fixtures__/file3.json', './__fixtures__/file4.json', 'json');
-  const testStr3 = genDiff('./__fixtures__/file3.yml', './__fixtures__/file4.json', 'json');
-
-  expect(testStr1).toBe(readFile('expectStringJson.txt'));
-  expect(testStr2).toBe(readFile('expectStringJson.txt'));
-  expect(testStr3).toBe(readFile('expectStringJson.txt'));
+  expect(testStr1).toBe(jsonFormat);
+  expect(testStr2).toBe(jsonFormat);
+  expect(testStr3).toBe(jsonFormat);
+  expect(testStr4).not.toBe(jsonFormat);
 });
