@@ -1,9 +1,11 @@
 import _ from 'lodash';
-import stylish from '../formatters/stylish.js';
-import plain from '../formatters/plain.js';
-import json from '../formatters/json.js';
-import { isObjectHasProperty, isTwoObjectsHasProperty } from '../helpers/objHasProps.js';
-import parsers from '../parsers/parsers.js';
+import * as path from 'path';
+import { cwd } from 'process';
+import * as fs from 'fs';
+import stylish from './formatters/stylish.js';
+import plain from './formatters/plain.js';
+import json from './formatters/json.js';
+import parsers from './parsers/parsers.js';
 
 const getCurrentFormatter = (formatter) => {
   switch (formatter) {
@@ -13,9 +15,18 @@ const getCurrentFormatter = (formatter) => {
     default: return () => 'We don\'t have this type of formatter';
   }
 };
+const getDataAndFormat = (filepath) => {
+  const normalizedPath = path.resolve(cwd(), `${filepath}`);
+  const dataForParse = fs.readFileSync(normalizedPath, 'utf8');
+  const arr = filepath.split('.');
+  const format = arr[arr.length - 1];
+  return [dataForParse, format];
+};
 export default (filepath1, filepath2, formatter = 'stylish') => {
-  const firstObj = parsers(filepath1);
-  const secondObj = parsers(filepath2);
+  const [firstDataForParse, firstFormat] = getDataAndFormat(filepath1);
+  const [secondDataForParse, secondFormat] = getDataAndFormat(filepath2);
+  const firstObj = parsers(firstDataForParse, firstFormat);
+  const secondObj = parsers(secondDataForParse, secondFormat);
 
   const iter = (firstData, secondData) => {
     const keys1 = _.keys(firstData);
@@ -39,7 +50,7 @@ export default (filepath1, filepath2, formatter = 'stylish') => {
 
         };
       }
-      if (isTwoObjectsHasProperty(firstData, secondData, propName)) {
+      if (_.has(firstData, propName) && _.has(secondData, propName)) {
         return {
           name: propName,
           firstProperty,
@@ -47,7 +58,7 @@ export default (filepath1, filepath2, formatter = 'stylish') => {
           type: 'diffValue',
         };
       }
-      if (isObjectHasProperty(firstData, propName)) {
+      if (_.has(firstData, propName)) {
         return {
           name: propName,
           property: firstProperty,
