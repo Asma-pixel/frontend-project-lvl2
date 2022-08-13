@@ -1,66 +1,66 @@
 [
  {
   "name": "common",
-  "type": "withChildrens",
+  "type": "nested",
   "children": [
    {
     "name": "follow",
     "property": false,
-    "type": "hasOnlySecProp"
+    "type": "added"
    },
    {
     "name": "setting1",
     "property": "Value 1",
-    "type": "equalValue"
+    "type": "unchanged"
    },
    {
     "name": "setting2",
     "property": 200,
-    "type": "hasOnlyFirstProp"
+    "type": "deleted"
    },
    {
     "name": "setting3",
     "firstProperty": true,
     "secondProperty": null,
-    "type": "diffValue"
+    "type": "changed"
    },
    {
     "name": "setting4",
     "property": "blah blah",
-    "type": "hasOnlySecProp"
+    "type": "added"
    },
    {
     "name": "setting5",
     "property": {
      "key5": "value5"
     },
-    "type": "hasOnlySecProp"
+    "type": "added"
    },
    {
     "name": "setting6",
-    "type": "withChildrens",
+    "type": "nested",
     "children": [
      {
       "name": "doge",
-      "type": "withChildrens",
+      "type": "nested",
       "children": [
        {
         "name": "wow",
         "firstProperty": "",
         "secondProperty": "so much",
-        "type": "diffValue"
+        "type": "changed"
        }
       ]
      },
      {
       "name": "key",
       "property": "value",
-      "type": "equalValue"
+      "type": "unchanged"
      },
      {
       "name": "ops",
       "property": "vops",
-      "type": "hasOnlySecProp"
+      "type": "added"
      }
     ]
    }
@@ -68,18 +68,18 @@
  },
  {
   "name": "group1",
-  "type": "withChildrens",
+  "type": "nested",
   "children": [
    {
     "name": "baz",
     "firstProperty": "bas",
     "secondProperty": "bars",
-    "type": "diffValue"
+    "type": "changed"
    },
    {
     "name": "foo",
     "property": "bar",
-    "type": "equalValue"
+    "type": "unchanged"
    },
    {
     "name": "nest",
@@ -87,7 +87,7 @@
      "key": "value"
     },
     "secondProperty": "str",
-    "type": "diffValue"
+    "type": "changed"
    }
   ]
  },
@@ -99,7 +99,7 @@
     "id": 45
    }
   },
-  "type": "hasOnlyFirstProp"
+  "type": "deleted"
  },
  {
   "name": "group3",
@@ -111,6 +111,6 @@
    },
    "fee": 100500
   },
-  "type": "hasOnlySecProp"
+  "type": "added"
  }
 ]

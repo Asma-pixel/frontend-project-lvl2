@@ -10,7 +10,7 @@ const buildTree = (firstData, secondData) => {
     if (_.isObject(firstProperty) && _.isObject(secondProperty)) {
       return {
         name: propName,
-        type: 'withChildrens',
+        type: 'nested',
         children: buildTree(firstProperty, secondProperty),
       };
     }
@@ -18,7 +18,7 @@ const buildTree = (firstData, secondData) => {
       return {
         name: propName,
         property: firstProperty,
-        type: 'equalValue',
+        type: 'unchanged',
 
       };
     }
@@ -27,20 +27,20 @@ const buildTree = (firstData, secondData) => {
         name: propName,
         firstProperty,
         secondProperty,
-        type: 'diffValue',
+        type: 'changed',
       };
     }
     if (_.has(firstData, propName)) {
       return {
         name: propName,
         property: firstProperty,
-        type: 'hasOnlyFirstProp',
+        type: 'deleted',
       };
     }
     return {
       name: propName,
       property: secondProperty,
-      type: 'hasOnlySecProp',
+      type: 'added',
     };
   });
   return resultArray;

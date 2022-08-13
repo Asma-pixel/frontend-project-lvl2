@@ -9,11 +9,12 @@ const plain = (tree, path = []) => {
   const formatedData = tree.map((node) => {
     const currentPath = [path, node.name].flat();
     switch (node.type) {
-      case 'withChildrens': return plain(node.children, currentPath);
-      case 'equalValue': return '';
-      case 'hasOnlyFirstProp': return `Property '${currentPath.join('.')}' was removed`;
-      case 'hasOnlySecProp': return `Property '${currentPath.join('.')}' was added with value: ${getValue(node.property)}`;
-      default: return `Property '${currentPath.join('.')}' was updated. From ${getValue(node.firstProperty)} to ${getValue(node.secondProperty)}`;
+      case 'nested': return plain(node.children, currentPath);
+      case 'unchanged': return '';
+      case 'deleted': return `Property '${currentPath.join('.')}' was removed`;
+      case 'added': return `Property '${currentPath.join('.')}' was added with value: ${getValue(node.property)}`;
+      case 'changed': return `Property '${currentPath.join('.')}' was updated. From ${getValue(node.firstProperty)} to ${getValue(node.secondProperty)}`;
+      default: throw new Error('Tree is incorrect');
     }
   });
   return formatedData.filter((n) => n).join('\n');
