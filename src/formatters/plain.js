@@ -13,7 +13,7 @@ const plain = (tree, path = []) => {
       case 'unchanged': return '';
       case 'deleted': return `Property '${currentPath.join('.')}' was removed`;
       case 'added': return `Property '${currentPath.join('.')}' was added with value: ${getValue(node.property)}`;
-      case 'changed': return `Property '${currentPath.join('.')}' was updated. From ${getValue(node.firstProperty)} to ${getValue(node.secondProperty)}`;
+      case 'changed': return `Property '${currentPath.join('.')}' was updated. From ${getValue(node.value1)} to ${getValue(node.value2)}`;
       default: throw new Error('Tree is incorrect');
     }
   });

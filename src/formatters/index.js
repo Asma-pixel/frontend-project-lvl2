@@ -7,6 +7,6 @@ export default (tree, formatter) => {
     case 'stylish': return stylish(tree);
     case 'plain': return plain(tree);
     case 'json': return json(tree);
-    default: return () => 'We don\'t have this type of formatter';
+    default: throw new Error('We don\'t have this type of formatter');
   }
 };

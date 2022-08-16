@@ -8,8 +8,7 @@ import buildTree from './buildTree.js';
 const getDataAndFormat = (filepath) => {
   const normalizedPath = path.resolve(cwd(), `${filepath}`);
   const dataForParse = fs.readFileSync(normalizedPath, 'utf8');
-  const arr = filepath.split('.');
-  const format = arr[arr.length - 1];
+  const format = path.extname(filepath).slice(1);
   return [dataForParse, format];
 };
 export default (filepath1, filepath2, formatter = 'stylish') => {

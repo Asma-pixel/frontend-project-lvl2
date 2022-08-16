@@ -1,48 +1,47 @@
 import _ from 'lodash';
 
-const buildTree = (firstData, secondData) => {
-  const keys1 = _.keys(firstData);
-  const keys2 = _.keys(secondData);
-  const propertyArr = _.sortBy(_.uniq([...keys1, ...keys2]));
-  const resultArray = propertyArr.map((propName) => {
-    const firstProperty = firstData[`${propName}`];
-    const secondProperty = secondData[`${propName}`];
-    if (_.isObject(firstProperty) && _.isObject(secondProperty)) {
+const buildTree = (data1, data2) => {
+  const keys1 = _.keys(data1);
+  const keys2 = _.keys(data2);
+  const generalKeys = _.sortBy(_.uniq([...keys1, ...keys2]));
+  return generalKeys.map((key) => {
+    const value1 = data1[`${key}`];
+    const value2 = data2[`${key}`];
+    if (_.isObject(value1) && _.isObject(value2)) {
       return {
-        name: propName,
+        name: key,
         type: 'nested',
-        children: buildTree(firstProperty, secondProperty),
+        children: buildTree(value1, value2),
       };
     }
-    if (firstProperty === secondProperty) {
+    if (value1 === value2) {
       return {
-        name: propName,
-        property: firstProperty,
+        name: key,
+        property: value1,
         type: 'unchanged',
 
       };
     }
-    if (_.has(firstData, propName) && _.has(secondData, propName)) {
+    if (_.has(data1, key) && _.has(data2, key)) {
       return {
-        name: propName,
-        firstProperty,
-        secondProperty,
+        name: key,
+        value1,
+        value2,
         type: 'changed',
       };
     }
-    if (_.has(firstData, propName)) {
+    if (_.has(data1, key)) {
       return {
-        name: propName,
-        property: firstProperty,
+        name: key,
+        property: value1,
         type: 'deleted',
       };
     }
     return {
-      name: propName,
-      property: secondProperty,
+      name: key,
+      property: value2,
       type: 'added',
     };
   });
-  return resultArray;
 };
 export default buildTree;
