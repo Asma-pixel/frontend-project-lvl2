@@ -5,15 +5,14 @@ import getCurrentFormatter from './formatters/index.js';
 import parsers from './parsers/parsers.js';
 import buildTree from './buildTree.js';
 
-const getDataAndFormat = (filepath) => {
-  const normalizedPath = path.resolve(cwd(), `${filepath}`);
-  const dataForParse = fs.readFileSync(normalizedPath, 'utf8');
-  const format = path.extname(filepath).slice(1);
-  return [dataForParse, format];
+const getData = (filepath) => {
+  const normalizedPath = path.resolve(cwd(), filepath);
+  return fs.readFileSync(normalizedPath, 'utf8');
 };
+const getFormat = (filepath) => path.extname(filepath).slice(1);
 export default (filepath1, filepath2, formatter = 'stylish') => {
-  const [firstDataForParse, firstFormat] = getDataAndFormat(filepath1);
-  const [secondDataForParse, secondFormat] = getDataAndFormat(filepath2);
+  const [firstDataForParse, firstFormat] = [getData(filepath1), getFormat(filepath1)];
+  const [secondDataForParse, secondFormat] = [getData(filepath2), getFormat(filepath2)];
   const firstObj = parsers(firstDataForParse, firstFormat);
   const secondObj = parsers(secondDataForParse, secondFormat);
 

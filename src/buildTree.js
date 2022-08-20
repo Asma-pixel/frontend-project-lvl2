@@ -5,8 +5,8 @@ const buildTree = (data1, data2) => {
   const keys2 = _.keys(data2);
   const generalKeys = _.sortBy(_.uniq([...keys1, ...keys2]));
   return generalKeys.map((key) => {
-    const value1 = data1[`${key}`];
-    const value2 = data2[`${key}`];
+    const value1 = data1[key];
+    const value2 = data2[key];
     if (_.isObject(value1) && _.isObject(value2)) {
       return {
         name: key,
